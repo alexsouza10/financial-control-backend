@@ -1,0 +1,6 @@
+@FinancialControl.Infrastructure_HostAddress = http://localhost:5274
+
+GET {{FinancialControl.Infrastructure_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
