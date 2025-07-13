@@ -2,7 +2,7 @@
 
 public class ExpenseResponseDto : BaseResponseDto
 {
-    public string Category { get; set; } = string.Empty;
+    public Guid CategoryId { get; set; } 
     public decimal Value { get; set; }
     public string PaymentMethod { get; set; } = string.Empty;
     public int Installments { get; set; }
