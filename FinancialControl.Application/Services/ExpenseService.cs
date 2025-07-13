@@ -19,7 +19,7 @@ public class ExpenseService : IExpenseService
         return new ExpenseResponseDto
         {
             Id = expense.Id,
-            Category = expense.Category,
+            CategoryId = expense.CategoryId, 
             Value = expense.Value,
             PaymentMethod = expense.PaymentMethod,
             Installments = expense.Installments,
@@ -33,7 +33,7 @@ public class ExpenseService : IExpenseService
     private Expense MapToExpenseEntity(ExpenseDto expenseDto)
     {
         return new Expense(
-            expenseDto.Category,
+            expenseDto.CategoryId, 
             expenseDto.Value,
             expenseDto.PaymentMethod,
             expenseDto.Installments,
@@ -68,7 +68,7 @@ public class ExpenseService : IExpenseService
         if (expense == null) return false;
 
         expense.Update(
-            expenseDto.Category,
+            expenseDto.CategoryId, 
             expenseDto.Value,
             expenseDto.PaymentMethod,
             expenseDto.Installments,

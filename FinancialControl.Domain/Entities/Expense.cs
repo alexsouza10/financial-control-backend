@@ -1,17 +1,19 @@
-﻿namespace FinancialControl.Domain.Entities;
+﻿// FinancialControl.Domain.Entities/Expense.cs
+namespace FinancialControl.Domain.Entities;
 
 public class Expense : BaseEntity
 {
-    public string Category { get; private set; }
+    public Guid CategoryId { get; private set; } 
+
     public decimal Value { get; private set; }
     public string PaymentMethod { get; private set; }
     public int Installments { get; private set; }
     public string Card { get; private set; }
     public DateTime Date { get; private set; }
 
-    public Expense(string category, decimal value, string paymentMethod, int installments, string card, DateTime date)
+    public Expense(Guid categoryId, decimal value, string paymentMethod, int installments, string card, DateTime date) 
     {
-        Category = category;
+        CategoryId = categoryId;
         Value = value;
         PaymentMethod = paymentMethod;
         Installments = installments;
@@ -19,9 +21,16 @@ public class Expense : BaseEntity
         Date = date;
     }
 
-    public void Update(string category, decimal value, string paymentMethod, int installments, string card, DateTime date)
+    public Expense()
     {
-        Category = category;
+        PaymentMethod = string.Empty;
+        Card = string.Empty;
+    }
+
+
+    public void Update(Guid categoryId, decimal value, string paymentMethod, int installments, string card, DateTime date) 
+    {
+        CategoryId = categoryId; 
         Value = value;
         PaymentMethod = paymentMethod;
         Installments = installments;
