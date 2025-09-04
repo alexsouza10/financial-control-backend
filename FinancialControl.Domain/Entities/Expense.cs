@@ -8,7 +8,7 @@ public class Expense : BaseEntity
     public decimal Value { get; private set; }
     public string PaymentMethod { get; private set; }
     public int Installments { get; private set; }
-    public string Card { get; private set; }
+    public string? Card { get; private set; }
     public DateTime Date { get; private set; }
 
     public Expense(Guid categoryId, decimal value, string paymentMethod, int installments, string card, DateTime date) 
