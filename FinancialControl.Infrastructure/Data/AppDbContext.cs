@@ -1,5 +1,8 @@
 ﻿using FinancialControl.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FinancialControl.Infrastructure.Data;
 
@@ -12,7 +15,6 @@ public class AppDbContext : DbContext
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", false);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,18 +24,19 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Expense>().ToTable("Expenses");
         modelBuilder.Entity<Salary>().ToTable("Salaries");
         modelBuilder.Entity<Category>().ToTable("Categories");
+        modelBuilder.Entity<User>().ToTable("Users");
 
         modelBuilder.Entity<Expense>(entity =>
         {
-            entity.Property(e => e.Value).HasColumnType("numeric(18,2)");
-            entity.Property(e => e.CategoryId).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.Value).HasColumnType("decimal(18,2)"); 
+            entity.Property(e => e.CategoryId).IsRequired();
             entity.Property(e => e.PaymentMethod).IsRequired().HasMaxLength(50);
             entity.Property(e => e.Card).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Salary>(entity =>
         {
-            entity.Property(s => s.Value).HasColumnType("numeric(18,2)");
+            entity.Property(s => s.Value).HasColumnType("decimal(18,2)");
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -65,15 +68,16 @@ public class AppDbContext : DbContext
         foreach (var entry in entries)
         {
             var baseEntity = (BaseEntity)entry.Entity;
-
+            var now = DateTime.UtcNow;
             if (entry.State == EntityState.Added)
             {
-                baseEntity.SetUpdatedAt(DateTime.UtcNow);
+                baseEntity.SetUpdatedAt(now);
             }
             else if (entry.State == EntityState.Modified)
             {
-                baseEntity.SetUpdatedAt(DateTime.UtcNow);
+                baseEntity.SetUpdatedAt(now);
             }
         }
     }
 }
+
